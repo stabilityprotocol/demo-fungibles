@@ -1,0 +1,65 @@
+{
+    "pages": {
+        "home": {
+            "startNow": "START NOW",
+            "title": "The world's first tokenless public blockchain network",
+            "subtitle": "A future in which digital privacy and composability empowers society to innovate and prosper.",
+            "transactionsToday": "Free Transactions Done Today",
+            "header": {
+                "resourcesCenter": "RESOURCES CENTER",
+                "blockExplorer": "BLOCK EXPLORER"
+            }
+        },
+        "zgt": {
+            "accountSelector": {
+                "label": "ACCOUNT",
+                "free": "FREE"
+            },
+            "stats": {
+                "remainingTransactions": "Transactions Remaining Today",
+                "timerReset": "Timer to Reset",
+                "transactionsSubmitted": "Total Transactions Submitted",
+                "lastTransaction": "Last Free Transaction",
+                "timer": {
+                    "seconds": "sec",
+                    "minutes": "min",
+                    "hours": "hr"
+                }
+            },
+            "transactionHistory": {
+                "title": "TRANSACTION HISTORY"
+            }
+        }
+    },
+    "components": {
+        "footer": {
+            "copyright": "COPYRIGHT © 2023 STABILITY SOLUTIONS INC. ALL RIGHTS RESERVED.",
+            "contactUs": "CONTACT US",
+            "followUs": "FOLLOW US",
+            "addStability": "ADD STABILITY"
+        },
+        "header": {
+            "upgrade": "Upgrade",
+            "docs": "Docs",
+            "networks": {
+                "testnet": "Testnet",
+                "mainnet": "Mainnet"
+            }
+        },
+        "connectionModal": {
+            "title": "Manage your access to the Stability Ecosystem",
+            "email": "EMAIL",
+            "magiclink": "MAGICLINK",
+            "metamask": "METAMASK"
+        }
+    },
+    "links": {
+        "explorer": "https://stability-betanet.blockscout.com/",
+        "explorerTx": "https://stability-betanet.blockscout.com/tx/{{hash}}",
+        "docs": "https://docs.stble.io/",
+        "contactForm": "https://us21.list-manage.com/contact-form?u=8afbcbdb9e4fdad91bd87ce22&form_id=9e39027f0e20b64fe0eb9a79af776a0c",
+        "x": "https://x.com/stabilityinc",
+        "linkedin": "https://www.linkedin.com/company/stabilitysolutions/",
+        "testnet-api": "https://vzahfimc4y.us-east-2.awsapprunner.com/api"
+    }
+}
