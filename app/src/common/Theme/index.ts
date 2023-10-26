@@ -33,6 +33,8 @@ export const Theme = {
     blue0: "#BAECFF",
     blue1: "#F0FBFF",
     blueLink: "#3E7CB1",
+    red0: "#FEE8E7",
+    red1: "#F97068",
     buttons: {
       primary: "#D6F3FF",
       primaryHover: "#BAECFF",

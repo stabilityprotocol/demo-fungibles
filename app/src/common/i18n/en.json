@@ -1,33 +1,27 @@
 {
     "pages": {
-        "home": {
-            "startNow": "START NOW",
-            "title": "The world's first tokenless public blockchain network",
-            "subtitle": "A future in which digital privacy and composability empowers society to innovate and prosper.",
-            "transactionsToday": "Free Transactions Done Today",
-            "header": {
-                "resourcesCenter": "RESOURCES CENTER",
-                "blockExplorer": "BLOCK EXPLORER"
-            }
-        },
-        "zgt": {
-            "accountSelector": {
-                "label": "ACCOUNT",
-                "free": "FREE"
+        "erc20": {
+            "invalidStep": "Invalid step",
+            "step1": {
+                "title": "LET'S MAKE A TOKEN",
+                "tokenName": "Token Name",
+                "tokenSymbol": "Token Symbol",
+                "amountToMint": "Amount to Mint",
+                "action": "Mint Token"
             },
-            "stats": {
-                "remainingTransactions": "Transactions Remaining Today",
-                "timerReset": "Timer to Reset",
-                "transactionsSubmitted": "Total Transactions Submitted",
-                "lastTransaction": "Last Free Transaction",
-                "timer": {
-                    "seconds": "sec",
-                    "minutes": "min",
-                    "hours": "hr"
+            "step2": {
+                "title": "CONFIRM YOUR TOKEN",
+                "back": "Back",
+                "confirm": "Deploy",
+                "validation": {
+                    "title": "Please review your token information before continue:"
                 }
             },
-            "transactionHistory": {
-                "title": "TRANSACTION HISTORY"
+            "step3": {
+                "title": "SUCCESS!",
+                "action": "Add Token to Wallet",
+                "creationInfo": "You have created a new token called {{name}} with the symbol {{symbol}}. Minted {{amount}} of this token to your address {{address}}.",
+                "transactionInfo": "Created at block {{block}} with transaction hash {{hash}}."
             }
         }
     },
@@ -44,11 +38,16 @@
             "networks": {
                 "testnet": "Testnet",
                 "mainnet": "Mainnet"
+            },
+            "web3": {
+                "copyAddress": "Copy Address",
+                "logOut": "Log Out"
             }
         },
         "connectionModal": {
             "title": "Manage your access to the Stability Ecosystem",
             "email": "EMAIL",
+            "newUser": "NEW USER",
             "magiclink": "MAGICLINK",
             "metamask": "METAMASK"
         }

@@ -2,7 +2,6 @@ import "./common/i18n";
 import { ThemeProvider } from "styled-components";
 import { Theme } from "./common/Theme";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { ZGT } from "./pages/ZGT";
 import { PortalRoot } from "./components/PortalRoot";
 import { WagmiConfig } from "wagmi";
 import { config } from "./common/Blockchain";
@@ -14,11 +13,15 @@ const router = createBrowserRouter([
     element: <PortalRoot />,
     children: [
       {
-        path: "/zgt/",
-        element: <ZGT />,
+        path: "/",
+        element: <ERC20 />,
       },
       {
-        path: "/",
+        path: "/erc20",
+        element: <ERC20 />,
+      },
+      {
+        path: "/nft",
         element: <ERC20 />,
       },
     ],

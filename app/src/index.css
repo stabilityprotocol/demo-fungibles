@@ -22,7 +22,7 @@ body {
 @media (max-width: 600px) {
   html,
   body {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .react-modal {

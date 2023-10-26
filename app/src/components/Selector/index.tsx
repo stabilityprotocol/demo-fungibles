@@ -53,7 +53,7 @@ export const Selector: React.FC<{
         onClick={onSelectedClick}
         className="selector__selected"
       >
-        <span>{selected.label}</span>
+        <span>{sel?.label ?? selected.label}</span>
         {!customization?.hideCaret && <AiOutlineDown />}
       </SelectorSelected>
       {isOpen && (

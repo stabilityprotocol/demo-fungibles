@@ -16,6 +16,10 @@ export const PortalRootWrapper = styled.div`
   }
 `;
 
+export const NavigationToggleWrapper = styled.div`
+  padding: ${(props) => props.theme.spacing.medium} 0;
+`;
+
 export const OutletWrapper = styled.div`
   display: flex;
   flex-direction: column;

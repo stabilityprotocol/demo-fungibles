@@ -13,6 +13,7 @@ import magiclink from "../../assets/magiclink.svg";
 import { usePortableDevice } from "../../common/hooks/usePortableDevice";
 import { Theme } from "../../common/Theme";
 import { universalWallet } from "../../common/Blockchain";
+import { HiOutlineMail } from "react-icons/hi";
 
 const modalStyles = {
   content: {
@@ -61,9 +62,9 @@ export const ConnectionModal: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
           {t("components.connectionModal.title")}
         </ConnectionModalTitle>
         <ConnectionOptionsWrapper>
-          {/* <ButtonSmallAction onClick={() => connect()}>
-            {t("components.connectionModal.email")} <HiOutlineMail />
-          </ButtonSmallAction> */}
+          <ButtonSmallAction onClick={() => connectMagicLink()}>
+            {t("components.connectionModal.newUser")} <HiOutlineMail />
+          </ButtonSmallAction>
           <ButtonSmallAction onClick={() => connectMagicLink()}>
             {t("components.connectionModal.magiclink")}
             <img src={magiclink} alt="MagicLink" />

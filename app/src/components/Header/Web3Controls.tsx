@@ -6,6 +6,8 @@ import { NetworkOptionWrapper } from "./Styles";
 import cube from "../../assets/cube.svg";
 import { SlLogout } from "react-icons/sl";
 import { useMemo } from "react";
+import { useCopyToClipboard } from "usehooks-ts";
+import { AiOutlineCopy } from "react-icons/ai";
 
 const TestnetCube = () => {
   return (
@@ -40,6 +42,7 @@ export const Web3Controls = () => {
   const { address } = useAccount();
   const { t } = useTranslation();
   const { disconnect } = useDisconnect();
+  const [, copyFn] = useCopyToClipboard();
 
   const Comp = useMemo(
     () => () => {
@@ -73,9 +76,18 @@ export const Web3Controls = () => {
             options={[
               {
                 label: (
-                  <NetworkOptionWrapper>
+                  <NetworkOptionWrapper onClick={() => copyFn(address ?? "")}>
+                    <AiOutlineCopy />
+                    {t("components.header.web3.copyAddress")}
+                  </NetworkOptionWrapper>
+                ),
+                value: "copy",
+              },
+              {
+                label: (
+                  <NetworkOptionWrapper onClick={() => disconnect()}>
                     <SlLogout />
-                    Log Out
+                    {t("components.header.web3.logOut")}
                   </NetworkOptionWrapper>
                 ),
                 value: "disconnect",
@@ -85,12 +97,12 @@ export const Web3Controls = () => {
               label: shortAddress(address),
               value: address,
             }}
-            onSelected={() => disconnect()}
+            onSelected={() => {}}
           />
         </>
       );
     },
-    [address, disconnect, t]
+    [address, copyFn, disconnect, t]
   );
 
   return <Comp />;
