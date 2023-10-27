@@ -13,6 +13,7 @@
                 "title": "CONFIRM YOUR TOKEN",
                 "back": "Back",
                 "confirm": "Deploy",
+                "loading": "Check your Wallet",
                 "validation": {
                     "title": "Please review your token information before continue:"
                 }
@@ -20,8 +21,15 @@
             "step3": {
                 "title": "SUCCESS!",
                 "action": "Add Token to Wallet",
-                "creationInfo": "You have created a new token called {{name}} with the symbol {{symbol}}. Minted {{amount}} of this token to your address {{address}}.",
-                "transactionInfo": "Created at block {{block}} with transaction hash {{hash}}."
+                "actionBack": "Create another token",
+                "tokenDetail": {
+                    "title": "Congratulations! This is your new token:",
+                    "name": "Token Name",
+                    "symbol": "Token Symbol",
+                    "address": "Token Address",
+                    "transactionHash": "Transaction Hash",
+                    "blockNumber": "Block Number"
+                }
             }
         }
     },
@@ -55,6 +63,8 @@
     "links": {
         "explorer": "https://stability-betanet.blockscout.com/",
         "explorerTx": "https://stability-betanet.blockscout.com/tx/{{hash}}",
+        "explorerBlock": "https://stability-betanet.blockscout.com/block/{{blockNumber}}",
+        "explorerAddress": "https://stability-betanet.blockscout.com/address/{{address}}",
         "docs": "https://docs.stble.io/",
         "contactForm": "https://us21.list-manage.com/contact-form?u=8afbcbdb9e4fdad91bd87ce22&form_id=9e39027f0e20b64fe0eb9a79af776a0c",
         "x": "https://x.com/stabilityinc",

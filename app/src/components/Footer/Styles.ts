@@ -11,8 +11,8 @@ export const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  color: #000;
-  border-top: 1px solid #000;
+  color: #fff;
+  border-top: 1px solid #fff;
   font-family: ${(props) => props.theme.font.secondary};
   font-size: 0.75rem;
 
@@ -22,7 +22,7 @@ export const FooterContainer = styled.div`
 
   a {
     text-decoration: none;
-    color: #000;
+    color: #fff;
   }
 
   @media ${mediaSizes.portableQuery} {

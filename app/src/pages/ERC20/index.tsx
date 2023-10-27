@@ -6,6 +6,7 @@ import { StepProgress } from "../../components/StepProgress";
 import { Step3 } from "./components/Step3";
 import { useTranslation } from "react-i18next";
 import { Step2 } from "./components/Step2";
+import { Address } from "viem";
 
 export type ERC20Props = {
   tokenName: string;
@@ -15,6 +16,14 @@ export type ERC20Props = {
   mintAmount: string;
   setMintAmount: (mintAmount: string) => void;
   setStep: (step: number) => void;
+  tokenMetadata?: ERC20Metadata;
+  setTokenMetadata: (metadata: ERC20Metadata) => void;
+};
+
+export type ERC20Metadata = {
+  address: Address;
+  blocknumber: bigint;
+  transactionHash: Address;
 };
 
 const steps: { [key: number]: React.FC<ERC20Props> } = {
@@ -27,6 +36,9 @@ export const ERC20 = () => {
   const [tokenName, setTokenName] = useState<string>("");
   const [tokenSymbol, setTokenSymbol] = useState<string>("");
   const [mintAmount, setMintAmount] = useState<string>("");
+  const [tokenMetadata, setTokenMetadata] = useState<
+    ERC20Metadata | undefined
+  >();
   const [step, setStep] = useState<number>(1);
   const { t } = useTranslation();
 
@@ -38,6 +50,8 @@ export const ERC20 = () => {
     mintAmount,
     setMintAmount,
     setStep,
+    tokenMetadata,
+    setTokenMetadata,
   };
 
   const Component = useMemo(() => {

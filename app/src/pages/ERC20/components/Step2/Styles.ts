@@ -23,6 +23,17 @@ export const Step2ActionsWrapper = styled.div`
     margin: 0 ${(props) => props.theme.spacing.xsmall};
     width: 30%;
   }
+
+  > div.loading {
+    > button {
+      cursor: not-allowed;
+      width: 100%;
+
+      > span {
+        margin-left: ${(props) => props.theme.spacing.small};
+      }
+    }
+  }
 `;
 
 export const Step2InputsWrapper = styled.div`

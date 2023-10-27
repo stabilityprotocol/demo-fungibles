@@ -13,15 +13,22 @@ import { PiDiamondsFourFill } from "react-icons/pi";
 import { StepHeader } from "../../Styles";
 import { useTranslation } from "react-i18next";
 import { Validation } from "./Validation";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   tokenNameSchema,
   tokenSymbolSchema,
   amountToMintSchema,
 } from "./Schemas";
+import { usePublicClient, useWalletClient } from "wagmi";
+import { erc20Contract } from "./Contract";
+import { stbleTestnet } from "../../../../common/Blockchain";
+import { LoadingIcon } from "../../../../components/LoadingIcon";
 
 export const Step2: React.FC<ERC20Props> = (props) => {
   const { t } = useTranslation();
+  const { data: walletClient } = useWalletClient();
+  const publicClient = usePublicClient();
+  const [loading, setLoading] = useState(false);
   const {
     tokenName,
     tokenSymbol,
@@ -30,6 +37,7 @@ export const Step2: React.FC<ERC20Props> = (props) => {
     setTokenName,
     setTokenSymbol,
     setMintAmount,
+    setTokenMetadata,
   } = props;
 
   const isValid = useMemo(() => {
@@ -42,6 +50,40 @@ export const Step2: React.FC<ERC20Props> = (props) => {
       mintAmountValid.success
     );
   }, [tokenName, tokenSymbol, mintAmount]);
+
+  const onDeployClick = useCallback(async () => {
+    if (walletClient) {
+      setLoading(true);
+      const normalizedAmount = BigInt(mintAmount) * BigInt(10 ** 18);
+      const normalizedSymbol = tokenSymbol.toUpperCase();
+      const deploymentHash = await walletClient.deployContract({
+        abi: erc20Contract.abi,
+        bytecode: erc20Contract.bytecode,
+        args: [tokenName, normalizedSymbol, BigInt(normalizedAmount)],
+        chain: stbleTestnet,
+      });
+      const initTime = Date.now();
+      const deployment = await publicClient.waitForTransactionReceipt({
+        hash: deploymentHash,
+        timeout: 60_000,
+      });
+      setTokenMetadata({
+        address: deployment.contractAddress!,
+        blocknumber: deployment.blockNumber,
+        transactionHash: deployment.transactionHash,
+      });
+      console.log("deployment total milliseconds", Date.now() - initTime);
+      setStep(3);
+    }
+  }, [
+    mintAmount,
+    publicClient,
+    setStep,
+    setTokenMetadata,
+    tokenName,
+    tokenSymbol,
+    walletClient,
+  ]);
 
   return (
     <Step2Wrapper>
@@ -79,13 +121,24 @@ export const Step2: React.FC<ERC20Props> = (props) => {
       <Validation {...props} />
 
       <Step2ActionsWrapper>
-        <ButtonSmall onClick={() => setStep(1)}>
-          {t("pages.erc20.step2.back")}
-        </ButtonSmall>
-        {isValid && (
-          <ButtonSmallAction onClick={() => setStep(3)}>
-            {t("pages.erc20.step2.confirm")} <BsFillArrowRightCircleFill />
-          </ButtonSmallAction>
+        {loading ? (
+          <div className="loading">
+            <ButtonSmallAction>
+              {t("pages.erc20.step2.loading")}
+              <LoadingIcon />
+            </ButtonSmallAction>
+          </div>
+        ) : (
+          <>
+            <ButtonSmall onClick={() => setStep(1)}>
+              {t("pages.erc20.step2.back")}
+            </ButtonSmall>
+            {isValid && (
+              <ButtonSmallAction onClick={() => onDeployClick()}>
+                {t("pages.erc20.step2.confirm")} <BsFillArrowRightCircleFill />
+              </ButtonSmallAction>
+            )}
+          </>
         )}
       </Step2ActionsWrapper>
     </Step2Wrapper>
