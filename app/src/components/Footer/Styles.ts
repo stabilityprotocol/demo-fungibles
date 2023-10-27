@@ -35,6 +35,11 @@ export const FooterContainer = styled.div`
     background: transparent;
     padding: ${(props) => props.theme.spacing.small};
     border: 0;
+    color: #000;
+
+    a {
+      color: #000;
+    }
   }
 `;
 
