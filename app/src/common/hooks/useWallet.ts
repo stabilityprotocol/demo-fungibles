@@ -1,22 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
-import { useWalletClient } from "wagmi";
+import { useMemo } from "react";
+import { useNetwork, useWalletClient } from "wagmi";
 import { stbleTestnet } from "../Blockchain";
+
+const appNetwork = stbleTestnet.id;
 
 export const useWallet = () => {
   const { data: walletClient } = useWalletClient();
-  const [currentChainId, setCurrentChainId] = useState<number | undefined>();
-  const appNetwork = stbleTestnet.id;
+  const { chain } = useNetwork();
 
-  const isWrongNetwork = useMemo(
-    () => currentChainId !== appNetwork,
-    [appNetwork, currentChainId]
-  );
-
-  useEffect(() => {
-    if (walletClient) {
-      walletClient.getChainId().then(setCurrentChainId);
-    }
-  }, [walletClient]);
+  const isWrongNetwork = useMemo(() => chain?.id !== appNetwork, [chain?.id]);
 
   const switchChain = async () => {
     walletClient?.switchChain(stbleTestnet).catch(async () => {
@@ -31,7 +23,7 @@ export const useWallet = () => {
   };
 
   return {
-    currentChainId,
+    chain,
     walletClient,
     isWrongNetwork,
     switchChain,
