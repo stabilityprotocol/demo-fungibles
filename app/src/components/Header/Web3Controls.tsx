@@ -148,7 +148,7 @@ const InvalidNetworkWrapper = styled.span`
 
   > svg {
     margin-right: 0.5rem;
-    color: red;
+    color: ${(props) => props.theme.colors.red1};
     width: 1.5rem;
     height: 1.5rem;
   }
