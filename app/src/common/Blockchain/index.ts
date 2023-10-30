@@ -17,15 +17,15 @@ export const stbleTestnet: Chain = {
   blockExplorers: {
     default: {
       name: "Stability Testnet",
-      url: "https://explorer.stble.io/",
+      url: "https://stability-testnet.blockscout.com/",
     },
   },
   rpcUrls: {
     default: {
-      http: ["https://free.stble.io"],
+      http: ["https://free.stabilityprotocol.com"],
     },
     public: {
-      http: ["https://free.stble.io"],
+      http: ["https://free.stabilityprotocol.com"],
     },
   },
   contracts: {

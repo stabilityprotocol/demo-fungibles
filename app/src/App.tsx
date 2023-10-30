@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         element: <ERC20 />,
       },
       {
-        path: "/nft",
+        path: "/erc1155",
         element: <ERC20 />,
       },
     ],

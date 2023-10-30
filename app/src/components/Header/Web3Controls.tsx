@@ -8,6 +8,9 @@ import { SlLogout } from "react-icons/sl";
 import { useMemo } from "react";
 import { useCopyToClipboard } from "usehooks-ts";
 import { AiOutlineCopy } from "react-icons/ai";
+import { useWallet } from "../../common/hooks/useWallet";
+import { PiWarningDiamondDuotone } from "react-icons/pi";
+import styled from "styled-components";
 
 const TestnetCube = () => {
   return (
@@ -43,6 +46,7 @@ export const Web3Controls = () => {
   const { t } = useTranslation();
   const { disconnect } = useDisconnect();
   const [, copyFn] = useCopyToClipboard();
+  const { isWrongNetwork } = useWallet();
 
   const Comp = useMemo(
     () => () => {
@@ -71,6 +75,27 @@ export const Web3Controls = () => {
               //   value: "mainnet",
               // },
             ]}
+            selected={
+              isWrongNetwork
+                ? {
+                    label: (
+                      <NetworkOptionWrapper>
+                        <InvalidNetwork />
+                        {t("components.header.networks.invalid")}
+                      </NetworkOptionWrapper>
+                    ),
+                    value: "invalid",
+                  }
+                : {
+                    label: (
+                      <NetworkOptionWrapper>
+                        <TestnetCube />
+                        {t("components.header.networks.testnet")}
+                      </NetworkOptionWrapper>
+                    ),
+                    value: "testnet",
+                  }
+            }
           />
           <Selector
             options={[
@@ -102,8 +127,29 @@ export const Web3Controls = () => {
         </>
       );
     },
-    [address, copyFn, disconnect, t]
+    [address, copyFn, disconnect, isWrongNetwork, t]
   );
 
   return <Comp />;
 };
+
+const InvalidNetwork = () => {
+  return (
+    <InvalidNetworkWrapper>
+      <PiWarningDiamondDuotone />
+    </InvalidNetworkWrapper>
+  );
+};
+
+const InvalidNetworkWrapper = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > svg {
+    margin-right: 0.5rem;
+    color: red;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+`;

@@ -22,7 +22,7 @@ export const SelectorSelected = styled.div<{ isOpen: boolean }>`
       background-color: ${(props) => props.theme.colors.neutralDark};
       border: 1px solid ${(props) => props.theme.colors.dark0};
 
-      svg {
+      > svg {
         transform: rotate(180deg);
       }
     `}

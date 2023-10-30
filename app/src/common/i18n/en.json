@@ -15,7 +15,8 @@
                 "confirm": "Deploy",
                 "loading": "Check your Wallet",
                 "validation": {
-                    "title": "Please review your token information before continue:"
+                    "title": "Please review your token information before continue:",
+                    "wrongNetwork": "Wrong Network, please change your wallet to Stability network."
                 }
             },
             "step3": {
@@ -45,7 +46,8 @@
             "docs": "Docs",
             "networks": {
                 "testnet": "Testnet",
-                "mainnet": "Mainnet"
+                "mainnet": "Mainnet",
+                "invalid": "Invalid Network"
             },
             "web3": {
                 "copyAddress": "Copy Address",

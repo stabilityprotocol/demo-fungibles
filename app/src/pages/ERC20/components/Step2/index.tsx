@@ -19,14 +19,15 @@ import {
   tokenSymbolSchema,
   amountToMintSchema,
 } from "./Schemas";
-import { usePublicClient, useWalletClient } from "wagmi";
+import { usePublicClient } from "wagmi";
 import { erc20Contract } from "./Contract";
 import { stbleTestnet } from "../../../../common/Blockchain";
 import { LoadingIcon } from "../../../../components/LoadingIcon";
+import { useWallet } from "../../../../common/hooks/useWallet";
 
 export const Step2: React.FC<ERC20Props> = (props) => {
   const { t } = useTranslation();
-  const { data: walletClient } = useWalletClient();
+  const { isWrongNetwork, walletClient } = useWallet();
   const publicClient = usePublicClient();
   const [loading, setLoading] = useState(false);
   const {
@@ -47,9 +48,10 @@ export const Step2: React.FC<ERC20Props> = (props) => {
     return (
       tokenNameValid.success &&
       tokenSymbolValid.success &&
-      mintAmountValid.success
+      mintAmountValid.success &&
+      !isWrongNetwork
     );
-  }, [tokenName, tokenSymbol, mintAmount]);
+  }, [tokenName, tokenSymbol, mintAmount, isWrongNetwork]);
 
   const onDeployClick = useCallback(async () => {
     if (walletClient) {

@@ -7,6 +7,7 @@ import {
 } from "./Schemas";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { useWallet } from "../../../../common/hooks/useWallet";
 
 export const Validation: React.FC<ERC20Props> = ({
   tokenName,
@@ -14,6 +15,7 @@ export const Validation: React.FC<ERC20Props> = ({
   mintAmount,
 }) => {
   const { t } = useTranslation();
+  const { isWrongNetwork } = useWallet();
 
   const validation = useMemo(() => {
     const tokenNameValid = tokenNameSchema.safeParse(tokenName);
@@ -30,9 +32,10 @@ export const Validation: React.FC<ERC20Props> = ({
     return (
       validation.tokenName.success &&
       validation.tokenSymbol.success &&
-      validation.amountToMint.success
+      validation.amountToMint.success &&
+      !isWrongNetwork
     );
-  }, [validation]);
+  }, [validation, isWrongNetwork]);
 
   return isValid ? null : (
     <ValidationWrapper>
@@ -50,6 +53,9 @@ export const Validation: React.FC<ERC20Props> = ({
           }
           return null;
         })}
+        {isWrongNetwork && (
+          <li>{t("pages.erc20.step2.validation.wrongNetwork")}</li>
+        )}
       </ul>
     </ValidationWrapper>
   );
