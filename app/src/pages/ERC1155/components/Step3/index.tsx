@@ -4,17 +4,19 @@ import { ButtonSmallAction } from "../../../../components/Button";
 import {
   Step3ActionsWrapper,
   Step3DeploymentInfoWrapper,
+  Step3NftPreview,
   Step3Wrapper,
 } from "./Styles";
 import { StepHeader } from "../../Styles";
 import { useTranslation } from "react-i18next";
 import { shortAddress } from "../../../../common/ETH";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { createIpfsLinkFromCidr } from "../../../../common/API";
 
 export const Step3: React.FC<ERC1155Props> = ({
   tokenName,
   tokenMetadata,
+  imageFile,
   setTokenName,
   setImageFile,
   setTokenMetadata,
@@ -35,9 +37,25 @@ export const Step3: React.FC<ERC1155Props> = ({
     }
   }, [setStep, tokenMetadata]);
 
+  const imgObject = useMemo(() => {
+    if (!imageFile) return undefined;
+    return URL.createObjectURL(imageFile);
+  }, [imageFile]);
+
   return tokenMetadata ? (
     <Step3Wrapper>
       <StepHeader>{t("pages.erc1155.step3.title")}</StepHeader>
+      {imgObject && (
+        <Step3NftPreview>
+          <a
+            href={createIpfsImgLink(tokenMetadata.ipfsData.data.image.href)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={imgObject} alt="Your NFT" />
+          </a>
+        </Step3NftPreview>
+      )}
       <Step3DeploymentInfoWrapper>
         <div>{t("pages.erc1155.step3.tokenDetail.title")}</div>
         <ul>
@@ -104,3 +122,7 @@ export const Step3: React.FC<ERC1155Props> = ({
     </Step3Wrapper>
   ) : null;
 };
+
+function createIpfsImgLink(ipfsHref: string) {
+  return "https://ipfs.io/ipfs/" + ipfsHref.replace("ipfs://", "");
+}

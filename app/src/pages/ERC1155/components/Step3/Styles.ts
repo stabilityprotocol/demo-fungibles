@@ -34,3 +34,14 @@ export const Step3DeploymentInfoWrapper = styled.div`
     color: #000;
   }
 `;
+
+export const Step3NftPreview = styled.div`
+  max-width: 80%;
+  margin-bottom: ${(props) => props.theme.spacing.medium};
+
+  img {
+    border-radius: ${(props) => props.theme.box.borderRadius};
+    width: 100%;
+    height: auto;
+  }
+`;

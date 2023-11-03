@@ -51,7 +51,7 @@
                 "title": "SUCCESS!",
                 "actionBack": "Create another NFT",
                 "tokenDetail": {
-                    "title": "Congratulations! This is your new token:",
+                    "title": "Congratulations! This is your new NFT:",
                     "name": "Token Name",
                     "address": "Token Address",
                     "metadata": "Metadata URL",
