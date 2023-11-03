@@ -90,11 +90,11 @@
         }
     },
     "links": {
-        "explorer": "https://stability-betanet.blockscout.com/",
-        "explorerTx": "https://stability-betanet.blockscout.com/tx/{{hash}}",
-        "explorerBlock": "https://stability-betanet.blockscout.com/block/{{blockNumber}}",
-        "explorerAddress": "https://stability-betanet.blockscout.com/address/{{address}}",
-        "docs": "https://docs.stble.io/",
+        "explorer": "https://stability-testnet.blockscout.com/",
+        "explorerTx": "https://stability-testnet.blockscout.com/tx/{{hash}}",
+        "explorerBlock": "https://stability-testnet.blockscout.com/block/{{blockNumber}}",
+        "explorerAddress": "https://stability-testnet.blockscout.com/address/{{address}}",
+        "docs": "https://docs.stabilityprotocol.com/",
         "contactForm": "https://us21.list-manage.com/contact-form?u=8afbcbdb9e4fdad91bd87ce22&form_id=9e39027f0e20b64fe0eb9a79af776a0c",
         "x": "https://x.com/stabilityinc",
         "linkedin": "https://www.linkedin.com/company/stabilitysolutions/",
