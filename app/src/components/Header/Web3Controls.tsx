@@ -46,7 +46,7 @@ export const Web3Controls = () => {
   const { t } = useTranslation();
   const { disconnect } = useDisconnect();
   const [, copyFn] = useCopyToClipboard();
-  const { isWrongNetwork } = useWallet();
+  const { isWrongNetwork, switchChain } = useWallet();
 
   const Comp = useMemo(
     () => () => {
@@ -58,7 +58,9 @@ export const Web3Controls = () => {
             options={[
               {
                 label: (
-                  <NetworkOptionWrapper>
+                  <NetworkOptionWrapper
+                    onClick={isWrongNetwork ? switchChain : () => {}}
+                  >
                     <TestnetCube />
                     {t("components.header.networks.testnet")}
                   </NetworkOptionWrapper>
