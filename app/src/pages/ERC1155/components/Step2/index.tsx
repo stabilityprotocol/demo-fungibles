@@ -21,9 +21,9 @@ import { useWallet } from "../../../../common/hooks/useWallet";
 import { useNftStorage } from "../../../../common/hooks/useNftStorage";
 import { TNftState } from "../../../../common/State/NFT";
 import { AiOutlinePicture } from "react-icons/ai";
-import { writeContract } from "viem/actions";
-import { prepareWriteContract } from "wagmi/actions";
 import { createIpfsLinkFromCidr } from "../../../../common/API";
+import { useEthersSigner } from "../../../../common/hooks/useEthersSigner";
+import { ethers } from "ethers";
 
 export const Step2: React.FC<ERC1155Props> = (props) => {
   const { t } = useTranslation();
@@ -31,10 +31,10 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
   const publicClient = usePublicClient();
   const [loading, setLoading] = useState(false);
   const { uploadNftData } = useNftStorage();
+  const ethersSigner = useEthersSigner({ chainId: stbleTestnet.id });
   const { tokenName, imageFile, setStep, setTokenName, setTokenMetadata } =
     props;
   const [metadataUploaded, setMetadataUploaded] = useState<TNftState[string]>();
-  console.log("🚀 ~ file: index.tsx:35 ~ metadataUploaded:", metadataUploaded);
 
   const isValid = useMemo(() => {
     const tokenNameValid = tokenNameSchema.safeParse(tokenName);
@@ -49,7 +49,8 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
   useEffect(() => {
     if (metadataUploaded) return;
     uploadMetadata().then((res) => {
-      console.info("metadata uploaded", res);
+      console.info("Metadata Uploaded");
+      console.table(res);
       setMetadataUploaded(res);
     });
   }, [metadataUploaded, uploadMetadata]);
@@ -59,24 +60,22 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
       setLoading(true);
       try {
         const uploadJsonDataPromise = await uploadMetadata();
-        const { request } = await prepareWriteContract({
-          abi: erc1155Contract.abi,
-          address: testnetFactories.erc1155Factory,
-          chainId: stbleTestnet.id,
-          functionName: "deployAndMintERC1155",
-          args: [
-            tokenName,
-            createIpfsLinkFromCidr(uploadJsonDataPromise!.ipnft),
-          ],
-        });
-        const deploymentHash = await writeContract(walletClient, {
-          ...request,
-          chain: stbleTestnet,
-        });
+        const signer = await ethersSigner;
+        const contract = new ethers.Contract(
+          testnetFactories.erc1155Factory,
+          erc1155Contract.abi,
+          signer
+        );
+        const deploymentInfo = await contract.deployAndMintERC1155(
+          tokenName,
+          createIpfsLinkFromCidr(uploadJsonDataPromise!.ipnft)
+        );
+        console.log("ERC1155 Deployment Info");
+        console.table(deploymentInfo);
         const initTime = Date.now();
         const deployment = await publicClient.waitForTransactionReceipt({
-          hash: deploymentHash,
-          timeout: 120_000,
+          hash: deploymentInfo.hash,
+          timeout: 300_000,
         });
         setTokenMetadata({
           address: deployment.logs[0].address,
@@ -92,12 +91,13 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
       }
     }
   }, [
+    ethersSigner,
     publicClient,
+    tokenName,
+    walletClient,
     setStep,
     setTokenMetadata,
-    tokenName,
     uploadMetadata,
-    walletClient,
   ]);
 
   return (

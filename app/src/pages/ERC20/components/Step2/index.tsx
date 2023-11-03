@@ -24,13 +24,14 @@ import { erc20Contract } from "./Contract";
 import { stbleTestnet, testnetFactories } from "../../../../common/Blockchain";
 import { LoadingIcon } from "../../../../components/LoadingIcon";
 import { useWallet } from "../../../../common/hooks/useWallet";
-import { writeContract } from "viem/actions";
-import { prepareWriteContract } from "wagmi/actions";
+import { useEthersSigner } from "../../../../common/hooks/useEthersSigner";
+import { ethers } from "ethers";
 
 export const Step2: React.FC<ERC20Props> = (props) => {
   const { t } = useTranslation();
   const { isWrongNetwork, walletClient } = useWallet();
   const publicClient = usePublicClient();
+  const ethersSigner = useEthersSigner({ chainId: stbleTestnet.id });
   const [loading, setLoading] = useState(false);
   const {
     tokenName,
@@ -61,21 +62,23 @@ export const Step2: React.FC<ERC20Props> = (props) => {
         setLoading(true);
         const normalizedAmount = BigInt(mintAmount) * BigInt(10 ** 18);
         const normalizedSymbol = tokenSymbol.toUpperCase();
-        const { request } = await prepareWriteContract({
-          abi: erc20Contract.abi,
-          address: testnetFactories.erc20Factory,
-          chainId: stbleTestnet.id,
-          functionName: "deployAndMintERC20",
-          args: [tokenName, normalizedSymbol, normalizedAmount],
-        });
-        const deploymentHash = await writeContract(walletClient, {
-          ...request,
-          chain: stbleTestnet,
-        });
+        const signer = await ethersSigner;
+        const contract = new ethers.Contract(
+          testnetFactories.erc20Factory,
+          erc20Contract.abi,
+          signer
+        );
+        const deploymentInfo = await contract.deployAndMintERC20(
+          tokenName,
+          normalizedSymbol,
+          normalizedAmount
+        );
+        console.log("ERC20 Deployment Info");
+        console.table(deploymentInfo);
         const initTime = Date.now();
         const deployment = await publicClient.waitForTransactionReceipt({
-          hash: deploymentHash,
-          timeout: 120_000,
+          hash: deploymentInfo.hash,
+          timeout: 300_000,
         });
         setTokenMetadata({
           address: deployment.logs[0].address,
@@ -90,6 +93,7 @@ export const Step2: React.FC<ERC20Props> = (props) => {
       }
     }
   }, [
+    ethersSigner,
     mintAmount,
     publicClient,
     setStep,
