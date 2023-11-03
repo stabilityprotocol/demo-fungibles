@@ -67,3 +67,7 @@ export function useEthAddressInfo(ethAddress?: Address) {
     isError: error,
   };
 }
+
+export function createIpfsLinkFromCidr(cidr: string) {
+  return `https://ipfs.io/ipfs/${cidr}`;
+}

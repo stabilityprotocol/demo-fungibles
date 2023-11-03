@@ -1,6 +1,5 @@
 import Modal from "react-modal";
-import { useConnect } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
+import { useConfig, useConnect } from "wagmi";
 import {
   ConnectionModalTitle,
   ConnectionModalTitleWrapper,
@@ -35,8 +34,9 @@ const modalStyles = {
 };
 
 export const ConnectionModal: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
+  const { connectors } = useConfig();
   const { connect } = useConnect({
-    connector: new InjectedConnector(),
+    connector: connectors[0],
   });
   const { connect: connectMagicLink } = useConnect({
     connector: universalWallet,

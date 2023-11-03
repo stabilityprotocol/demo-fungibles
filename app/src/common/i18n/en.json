@@ -32,6 +32,33 @@
                     "blockNumber": "Block Number"
                 }
             }
+        },
+        "erc1155": {
+            "invalidStep": "Invalid step",
+            "step1": {
+                "title": "LET'S MAKE AN NFT",
+                "tokenName": "Collection Name",
+                "dropzoneDescription": "Drop your image here or click to select"
+            },
+            "step2": {
+                "validation": {
+                    "title": "Please review your NFT information before continue:",
+                    "wrongNetwork": "Wrong Network, please change your wallet to Stability network.",
+                    "noImage": "Please upload an image"
+                }
+            },
+            "step3": {
+                "title": "SUCCESS!",
+                "actionBack": "Create another NFT",
+                "tokenDetail": {
+                    "title": "Congratulations! This is your new token:",
+                    "name": "Token Name",
+                    "address": "Token Address",
+                    "metadata": "Metadata URL",
+                    "transactionHash": "Transaction Hash",
+                    "blockNumber": "Block Number"
+                }
+            }
         }
     },
     "components": {

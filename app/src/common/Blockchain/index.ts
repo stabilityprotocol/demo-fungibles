@@ -55,7 +55,12 @@ export const universalWallet = new UniversalWalletConnector({
 });
 
 export const config = createConfig({
-  // autoConnect: true,
+  autoConnect: true,
   connectors: [new InjectedConnector(), universalWallet],
   publicClient,
 });
+
+export const testnetFactories = {
+  erc20Factory: "0x175351a38a16e60E20b3989E1566B5CC603bD493",
+  erc1155Factory: "0x59026F4168fb26a0bFc8C5155C9B59d0DF2fD001",
+} as const;

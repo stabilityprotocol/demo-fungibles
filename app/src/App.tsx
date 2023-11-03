@@ -6,6 +6,8 @@ import { PortalRoot } from "./components/PortalRoot";
 import { WagmiConfig } from "wagmi";
 import { config } from "./common/Blockchain";
 import { ERC20 } from "./pages/ERC20";
+import { ERC1155 } from "./pages/ERC1155";
+import { RecoilRoot } from "recoil";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <ERC20 />,
+        element: <ERC1155 />,
       },
       {
         path: "/erc20",
@@ -22,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/erc1155",
-        element: <ERC20 />,
+        element: <ERC1155 />,
       },
     ],
   },
@@ -31,11 +33,13 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <WagmiConfig config={config}>
-        <ThemeProvider theme={Theme}>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </WagmiConfig>
+      <RecoilRoot>
+        <WagmiConfig config={config}>
+          <ThemeProvider theme={Theme}>
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </WagmiConfig>
+      </RecoilRoot>
     </>
   );
 }
