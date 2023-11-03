@@ -1,4 +1,4 @@
-import { UniversalWalletConnector } from "@magiclabs/wagmi-connector";
+import { DedicatedWalletConnector } from "@magiclabs/wagmi-connector";
 import { configureChains } from "@wagmi/core";
 import { publicProvider } from "@wagmi/core/providers/public";
 import { Chain, createConfig } from "wagmi";
@@ -42,12 +42,12 @@ export const { chains, publicClient } = configureChains(
   [publicProvider()]
 );
 
-export const universalWallet = new UniversalWalletConnector({
+export const universalWallet = new DedicatedWalletConnector({
   options: {
-    apiKey: "pk_live_325490FF33DF46BD",
+    apiKey: "pk_live_ACB8ED7FCDEFDC21",
     magicSdkConfiguration: {
       network: {
-        rpcUrl: "https://alphanet.stble.io", // your ethereum, polygon, or optimism mainnet/testnet rpc URL
+        rpcUrl: "https://magic.free.testnet.stabilityprotocol.com",
         chainId: 20180427,
       },
     },

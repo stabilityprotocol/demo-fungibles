@@ -57,32 +57,37 @@ export const Step2: React.FC<ERC20Props> = (props) => {
 
   const onDeployClick = useCallback(async () => {
     if (walletClient) {
-      setLoading(true);
-      const normalizedAmount = BigInt(mintAmount) * BigInt(10 ** 18);
-      const normalizedSymbol = tokenSymbol.toUpperCase();
-      const { request } = await prepareWriteContract({
-        abi: erc20Contract.abi,
-        address: testnetFactories.erc20Factory,
-        chainId: stbleTestnet.id,
-        functionName: "deployAndMintERC20",
-        args: [tokenName, normalizedSymbol, normalizedAmount],
-      });
-      const deploymentHash = await writeContract(walletClient, {
-        ...request,
-        chain: stbleTestnet,
-      });
-      const initTime = Date.now();
-      const deployment = await publicClient.waitForTransactionReceipt({
-        hash: deploymentHash,
-        timeout: 120_000,
-      });
-      setTokenMetadata({
-        address: deployment.logs[0].address,
-        blocknumber: deployment.blockNumber,
-        transactionHash: deployment.transactionHash,
-      });
-      console.log("deployment total milliseconds", Date.now() - initTime);
-      setStep(3);
+      try {
+        setLoading(true);
+        const normalizedAmount = BigInt(mintAmount) * BigInt(10 ** 18);
+        const normalizedSymbol = tokenSymbol.toUpperCase();
+        const { request } = await prepareWriteContract({
+          abi: erc20Contract.abi,
+          address: testnetFactories.erc20Factory,
+          chainId: stbleTestnet.id,
+          functionName: "deployAndMintERC20",
+          args: [tokenName, normalizedSymbol, normalizedAmount],
+        });
+        const deploymentHash = await writeContract(walletClient, {
+          ...request,
+          chain: stbleTestnet,
+        });
+        const initTime = Date.now();
+        const deployment = await publicClient.waitForTransactionReceipt({
+          hash: deploymentHash,
+          timeout: 120_000,
+        });
+        setTokenMetadata({
+          address: deployment.logs[0].address,
+          blocknumber: deployment.blockNumber,
+          transactionHash: deployment.transactionHash,
+        });
+        console.log("deployment total milliseconds", Date.now() - initTime);
+        setStep(3);
+      } catch (e) {
+        console.error(e);
+        setLoading(false);
+      }
     }
   }, [
     mintAmount,

@@ -57,31 +57,39 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
   const onDeployClick = useCallback(async () => {
     if (walletClient) {
       setLoading(true);
-      const uploadJsonDataPromise = await uploadMetadata();
-      const { request } = await prepareWriteContract({
-        abi: erc1155Contract.abi,
-        address: testnetFactories.erc1155Factory,
-        chainId: stbleTestnet.id,
-        functionName: "deployAndMintERC1155",
-        args: [tokenName, createIpfsLinkFromCidr(uploadJsonDataPromise!.ipnft)],
-      });
-      const deploymentHash = await writeContract(walletClient, {
-        ...request,
-        chain: stbleTestnet,
-      });
-      const initTime = Date.now();
-      const deployment = await publicClient.waitForTransactionReceipt({
-        hash: deploymentHash,
-        timeout: 120_000,
-      });
-      setTokenMetadata({
-        address: deployment.logs[0].address,
-        blocknumber: deployment.blockNumber,
-        transactionHash: deployment.transactionHash,
-        ipfsData: uploadJsonDataPromise!,
-      });
-      console.log("deployment total milliseconds", Date.now() - initTime);
-      setStep(3);
+      try {
+        const uploadJsonDataPromise = await uploadMetadata();
+        const { request } = await prepareWriteContract({
+          abi: erc1155Contract.abi,
+          address: testnetFactories.erc1155Factory,
+          chainId: stbleTestnet.id,
+          functionName: "deployAndMintERC1155",
+          args: [
+            tokenName,
+            createIpfsLinkFromCidr(uploadJsonDataPromise!.ipnft),
+          ],
+        });
+        const deploymentHash = await writeContract(walletClient, {
+          ...request,
+          chain: stbleTestnet,
+        });
+        const initTime = Date.now();
+        const deployment = await publicClient.waitForTransactionReceipt({
+          hash: deploymentHash,
+          timeout: 120_000,
+        });
+        setTokenMetadata({
+          address: deployment.logs[0].address,
+          blocknumber: deployment.blockNumber,
+          transactionHash: deployment.transactionHash,
+          ipfsData: uploadJsonDataPromise!,
+        });
+        console.log("deployment total milliseconds", Date.now() - initTime);
+        setStep(3);
+      } catch (err) {
+        setLoading(false);
+        console.error(err);
+      }
     }
   }, [
     publicClient,
