@@ -21,18 +21,16 @@ import {
 } from "./Schemas";
 import { usePublicClient } from "wagmi";
 import { erc20Contract } from "./Contract";
-import { stbleTestnet, testnetFactories } from "../../../../common/Blockchain";
+import { testnetFactories } from "../../../../common/Blockchain";
 import { LoadingIcon } from "../../../../components/LoadingIcon";
 import { useWallet } from "../../../../common/hooks/useWallet";
-import { useEthersSigner } from "../../../../common/hooks/useEthersSigner";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
 
 export const Step2: React.FC<ERC20Props> = (props) => {
   const { t } = useTranslation();
-  const { isWrongNetwork, walletClient } = useWallet();
+  const { isWrongNetwork, walletClient, ethersSigner } = useWallet();
   const publicClient = usePublicClient();
-  const ethersSigner = useEthersSigner({ chainId: stbleTestnet.id });
   const [loading, setLoading] = useState(false);
   const {
     tokenName,

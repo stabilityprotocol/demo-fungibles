@@ -1,8 +1,16 @@
 import { useMemo } from "react";
-import { useNetwork, useWalletClient } from "wagmi";
+import { WalletClient, useNetwork, useWalletClient } from "wagmi";
 import { stbleTestnet } from "../Blockchain";
+import { BrowserProvider } from "ethers";
 
 const appNetwork = stbleTestnet.id;
+
+export function walletClientToSigner(walletClient: WalletClient) {
+  const { account, transport } = walletClient;
+  const provider = new BrowserProvider(transport);
+  const signer = provider.getSigner(account.address);
+  return signer;
+}
 
 export const useWallet = () => {
   const { data: walletClient } = useWalletClient();
@@ -22,10 +30,16 @@ export const useWallet = () => {
     walletClient?.addChain({ chain: stbleTestnet });
   };
 
+  const ethersSigner = useMemo(
+    () => (walletClient ? walletClientToSigner(walletClient) : undefined),
+    [walletClient]
+  );
+
   return {
     chain,
     walletClient,
     isWrongNetwork,
+    ethersSigner,
     switchChain,
     addChain,
   };

@@ -15,24 +15,22 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { tokenNameSchema } from "./Schemas";
 import { usePublicClient } from "wagmi";
 import { erc1155Contract } from "./Contract";
-import { stbleTestnet, testnetFactories } from "../../../../common/Blockchain";
+import { testnetFactories } from "../../../../common/Blockchain";
 import { LoadingIcon } from "../../../../components/LoadingIcon";
 import { useWallet } from "../../../../common/hooks/useWallet";
 import { useNftStorage } from "../../../../common/hooks/useNftStorage";
 import { TNftState } from "../../../../common/State/NFT";
 import { AiOutlinePicture } from "react-icons/ai";
 import { createIpfsLinkFromCidr } from "../../../../common/API";
-import { useEthersSigner } from "../../../../common/hooks/useEthersSigner";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
 
 export const Step2: React.FC<ERC1155Props> = (props) => {
   const { t } = useTranslation();
-  const { isWrongNetwork, walletClient } = useWallet();
+  const { isWrongNetwork, walletClient, ethersSigner } = useWallet();
   const publicClient = usePublicClient();
   const [loading, setLoading] = useState(false);
   const { uploadNftData } = useNftStorage();
-  const ethersSigner = useEthersSigner({ chainId: stbleTestnet.id });
   const { tokenName, imageFile, setStep, setTokenName, setTokenMetadata } =
     props;
   const [metadataUploaded, setMetadataUploaded] = useState<TNftState[string]>();
