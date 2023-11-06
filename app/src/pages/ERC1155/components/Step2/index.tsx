@@ -24,6 +24,7 @@ import { AiOutlinePicture } from "react-icons/ai";
 import { createIpfsLinkFromCidr } from "../../../../common/API";
 import { useEthersSigner } from "../../../../common/hooks/useEthersSigner";
 import { ethers } from "ethers";
+import { toast } from "react-toastify";
 
 export const Step2: React.FC<ERC1155Props> = (props) => {
   const { t } = useTranslation();
@@ -86,18 +87,20 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
         console.log("deployment total milliseconds", Date.now() - initTime);
         setStep(3);
       } catch (err) {
-        setLoading(false);
         console.error(err);
+        toast.error(t("pages.erc1155.step2.error"));
+        setLoading(false);
       }
     }
   }, [
-    ethersSigner,
-    publicClient,
-    tokenName,
     walletClient,
-    setStep,
-    setTokenMetadata,
     uploadMetadata,
+    ethersSigner,
+    tokenName,
+    publicClient,
+    setTokenMetadata,
+    setStep,
+    t,
   ]);
 
   return (

@@ -8,6 +8,9 @@ import { config } from "./common/Blockchain";
 import { ERC20 } from "./pages/ERC20";
 import { ERC1155 } from "./pages/ERC1155";
 import { RecoilRoot } from "recoil";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +40,7 @@ function App() {
         <WagmiConfig config={config}>
           <ThemeProvider theme={Theme}>
             <RouterProvider router={router} />
+            <ToastContainer theme="dark" />
           </ThemeProvider>
         </WagmiConfig>
       </RecoilRoot>

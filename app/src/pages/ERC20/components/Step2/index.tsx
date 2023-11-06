@@ -26,6 +26,7 @@ import { LoadingIcon } from "../../../../components/LoadingIcon";
 import { useWallet } from "../../../../common/hooks/useWallet";
 import { useEthersSigner } from "../../../../common/hooks/useEthersSigner";
 import { ethers } from "ethers";
+import { toast } from "react-toastify";
 
 export const Step2: React.FC<ERC20Props> = (props) => {
   const { t } = useTranslation();
@@ -89,6 +90,7 @@ export const Step2: React.FC<ERC20Props> = (props) => {
         setStep(3);
       } catch (e) {
         console.error(e);
+        toast.error(t("pages.erc20.step2.error"));
         setLoading(false);
       }
     }
@@ -98,6 +100,7 @@ export const Step2: React.FC<ERC20Props> = (props) => {
     publicClient,
     setStep,
     setTokenMetadata,
+    t,
     tokenName,
     tokenSymbol,
     walletClient,

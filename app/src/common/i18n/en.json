@@ -14,6 +14,7 @@
                 "back": "Back",
                 "confirm": "Deploy",
                 "loading": "Check your Wallet",
+                "error": "Error deploying your token, review your information and try again.",
                 "validation": {
                     "title": "Please review your token information before continue:",
                     "wrongNetwork": "Wrong Network, please change your wallet to Stability network."
@@ -41,6 +42,7 @@
                 "dropzoneDescription": "Drop your image here or click to select"
             },
             "step2": {
+                "error": "Error deploying your NFT, review your information and try again.",
                 "validation": {
                     "title": "Please review your NFT information before continue:",
                     "wrongNetwork": "Wrong Network, please change your wallet to Stability network.",
