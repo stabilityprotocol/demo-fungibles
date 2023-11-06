@@ -80,7 +80,8 @@
             },
             "web3": {
                 "copyAddress": "Copy Address",
-                "logOut": "Log Out"
+                "logOut": "Log Out",
+                "explorer": "Explorer"
             }
         },
         "connectionModal": {

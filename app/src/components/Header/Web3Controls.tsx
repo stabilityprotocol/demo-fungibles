@@ -7,7 +7,7 @@ import cube from "../../assets/cube.svg";
 import { SlLogout } from "react-icons/sl";
 import { useMemo } from "react";
 import { useCopyToClipboard } from "usehooks-ts";
-import { AiOutlineCopy } from "react-icons/ai";
+import { AiOutlineCopy, AiOutlineZoomIn } from "react-icons/ai";
 import { useWallet } from "../../common/hooks/useWallet";
 import { PiWarningDiamondDuotone } from "react-icons/pi";
 import styled from "styled-components";
@@ -112,6 +112,22 @@ export const Web3Controls = () => {
               },
               {
                 label: (
+                  <NetworkOptionWrapper
+                    onClick={() =>
+                      window.open(
+                        t("links.explorerAddress", { address }),
+                        "_blank"
+                      )
+                    }
+                  >
+                    <AiOutlineZoomIn />
+                    {t("components.header.web3.explorer")}
+                  </NetworkOptionWrapper>
+                ),
+                value: "copy",
+              },
+              {
+                label: (
                   <NetworkOptionWrapper onClick={() => disconnect()}>
                     <SlLogout />
                     {t("components.header.web3.logOut")}
@@ -129,7 +145,7 @@ export const Web3Controls = () => {
         </>
       );
     },
-    [address, copyFn, disconnect, isWrongNetwork, t]
+    [address, copyFn, disconnect, isWrongNetwork, switchChain, t]
   );
 
   return <Comp />;
