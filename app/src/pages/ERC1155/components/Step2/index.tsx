@@ -11,7 +11,7 @@ import {
 import { StepHeader } from "../../Styles";
 import { useTranslation } from "react-i18next";
 import { Validation } from "./Validation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { tokenNameSchema } from "./Schemas";
 import { usePublicClient } from "wagmi";
 import { erc1155Contract } from "./Contract";
@@ -19,10 +19,10 @@ import { testnetFactories } from "../../../../common/Blockchain";
 import { LoadingIcon } from "../../../../components/LoadingIcon";
 import { useWallet } from "../../../../common/hooks/useWallet";
 import { useNftStorage } from "../../../../common/hooks/useNftStorage";
-import { TNftState } from "../../../../common/State/NFT";
 import { createIpfsLinkFromCidr } from "../../../../common/API";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
+import { useEffectOnce } from "usehooks-ts";
 
 export const Step2: React.FC<ERC1155Props> = (props) => {
   const { t } = useTranslation();
@@ -32,8 +32,6 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
   const { uploadNftData } = useNftStorage();
   const { tokenName, imageFile, setStep, setTokenName, setTokenMetadata } =
     props;
-  const [metadataUploaded, setMetadataUploaded] = useState<TNftState[string]>();
-
   const isValid = useMemo(() => {
     const tokenNameValid = tokenNameSchema.safeParse(tokenName);
     return tokenNameValid.success && imageFile !== undefined && !isWrongNetwork;
@@ -44,14 +42,9 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
     return uploadNftData(tokenName, imageFile);
   }, [imageFile, tokenName, uploadNftData]);
 
-  useEffect(() => {
-    if (metadataUploaded) return;
-    uploadMetadata().then((res) => {
-      console.info("Metadata Uploaded");
-      console.table(res);
-      setMetadataUploaded(res);
-    });
-  }, [metadataUploaded, uploadMetadata]);
+  useEffectOnce(() => {
+    uploadMetadata();
+  });
 
   const onDeployClick = useCallback(async () => {
     if (walletClient) {

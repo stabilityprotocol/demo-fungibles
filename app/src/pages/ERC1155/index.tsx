@@ -23,7 +23,7 @@ export type ERC1155Metadata = {
   address: Address;
   blocknumber: bigint;
   transactionHash: Address;
-  ipfsData: TNftState[string];
+  ipfsData: Awaited<TNftState[string]>;
 };
 
 const steps: { [key: number]: React.FC<ERC1155Props> } = {
