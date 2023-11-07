@@ -54,9 +54,25 @@ export const universalWallet = new DedicatedWalletConnector({
   },
 });
 
+export const universalWalletNoModals = new DedicatedWalletConnector({
+  options: {
+    apiKey: "pk_live_E3FEA2649D5D92A1",
+    magicSdkConfiguration: {
+      network: {
+        rpcUrl: "https://magic.free.testnet.stabilityprotocol.com",
+        chainId: 20180427,
+      },
+    },
+  },
+});
+
 export const config = createConfig({
   autoConnect: true,
-  connectors: [new InjectedConnector(), universalWallet],
+  connectors: [
+    new InjectedConnector(),
+    universalWallet,
+    universalWalletNoModals,
+  ],
   publicClient,
 });
 

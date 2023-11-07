@@ -89,6 +89,7 @@
             "email": "EMAIL",
             "newUser": "NEW USER",
             "magiclink": "MAGICLINK",
+            "magiclinkNoModals": "MAGICLINK (NO MODALS)",
             "metamask": "METAMASK"
         }
     },

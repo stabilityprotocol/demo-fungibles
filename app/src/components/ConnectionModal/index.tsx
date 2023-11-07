@@ -11,8 +11,11 @@ import metamask2 from "../../assets/metamask.svg";
 import magiclink from "../../assets/magiclink.svg";
 import { usePortableDevice } from "../../common/hooks/usePortableDevice";
 import { Theme } from "../../common/Theme";
-import { universalWallet } from "../../common/Blockchain";
 import { HiOutlineMail } from "react-icons/hi";
+import {
+  universalWallet,
+  universalWalletNoModals,
+} from "../../common/Blockchain";
 
 const modalStyles = {
   content: {
@@ -41,6 +44,10 @@ export const ConnectionModal: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
   const { connect: connectMagicLink } = useConnect({
     connector: universalWallet,
   });
+
+  const { connect: connectMagicLinkNoModals } = useConnect({
+    connector: universalWalletNoModals,
+  });
   const { isPortable } = usePortableDevice();
   const { t } = useTranslation();
 
@@ -67,6 +74,10 @@ export const ConnectionModal: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
           </ButtonSmallAction>
           <ButtonSmallAction onClick={() => connectMagicLink()}>
             {t("components.connectionModal.magiclink")}
+            <img src={magiclink} alt="MagicLink" />
+          </ButtonSmallAction>
+          <ButtonSmallAction onClick={() => connectMagicLinkNoModals()}>
+            {t("components.connectionModal.magiclinkNoModals")}
             <img src={magiclink} alt="MagicLink" />
           </ButtonSmallAction>
           <ButtonSmallAction onClick={() => connect()}>
