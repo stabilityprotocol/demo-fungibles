@@ -7,7 +7,7 @@
                 "tokenName": "Token Name",
                 "tokenSymbol": "Token Symbol",
                 "amountToMint": "Amount to Mint",
-                "action": "Mint Token"
+                "action": "Mint"
             },
             "step2": {
                 "title": "CONFIRM YOUR TOKEN",
