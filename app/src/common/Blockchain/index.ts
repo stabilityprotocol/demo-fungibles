@@ -22,10 +22,10 @@ export const stbleTestnet: Chain = {
   },
   rpcUrls: {
     default: {
-      http: ["https://free.stabilityprotocol.com"],
+      http: ["https://free.testnet.stabilityprotocol.com"],
     },
     public: {
-      http: ["https://free.stabilityprotocol.com"],
+      http: ["https://free.testnet.stabilityprotocol.com"],
     },
   },
   contracts: {
