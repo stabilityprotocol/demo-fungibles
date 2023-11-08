@@ -42,21 +42,13 @@ export const { chains, publicClient } = configureChains(
   [publicProvider()]
 );
 
-export const universalWallet = new DedicatedWalletConnector({
-  options: {
-    apiKey: "pk_live_ACB8ED7FCDEFDC21",
-    magicSdkConfiguration: {
-      network: {
-        rpcUrl: "https://magic.free.testnet.stabilityprotocol.com",
-        chainId: 20180427,
-      },
-    },
-  },
-});
+export const mlWalletApiKey = window.location.search.includes("?mlModals")
+  ? "pk_live_ACB8ED7FCDEFDC21"
+  : "pk_live_E3FEA2649D5D92A1";
 
-export const universalWalletNoModals = new DedicatedWalletConnector({
+export const dedicatedWallet = new DedicatedWalletConnector({
   options: {
-    apiKey: "pk_live_E3FEA2649D5D92A1",
+    apiKey: mlWalletApiKey,
     magicSdkConfiguration: {
       network: {
         rpcUrl: "https://magic.free.testnet.stabilityprotocol.com",
@@ -68,11 +60,7 @@ export const universalWalletNoModals = new DedicatedWalletConnector({
 
 export const config = createConfig({
   autoConnect: true,
-  connectors: [
-    new InjectedConnector(),
-    universalWallet,
-    universalWalletNoModals,
-  ],
+  connectors: [new InjectedConnector(), dedicatedWallet],
   publicClient,
 });
 
