@@ -3,7 +3,7 @@ import {
   HeaderLogoWrapper,
   HeaderWrapper,
 } from "./Styles";
-import logoBlack from "../../assets/stability-black.svg";
+import logoBlack from "../../assets/stability-mintify.svg";
 import { ButtonSmallNoFill } from "../Button";
 import { Link } from "react-router-dom";
 import { IoDocumentSharp } from "react-icons/io5";

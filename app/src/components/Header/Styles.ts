@@ -17,9 +17,15 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const HeaderLogoWrapper = styled.span`
-  > img {
-    width: auto;
-    height: 2rem;
+  > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: auto;
+      height: 1.75rem;
+    }
   }
 
   @media ${mediaSizes.portableQuery} {
