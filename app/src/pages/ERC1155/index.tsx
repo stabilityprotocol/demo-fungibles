@@ -11,10 +11,12 @@ import { TNftState } from "../../common/State/NFT";
 
 export type ERC1155Props = {
   tokenName: string;
+  collectionDescription: string;
   imageFile: File | undefined;
   tokenMetadata?: ERC1155Metadata;
-  setTokenName: (tokenName: string) => void;
   setTokenMetadata: (metadata: ERC1155Metadata | undefined) => void;
+  setTokenName: (tokenName: string) => void;
+  setCollectionDescription: (tokenName: string) => void;
   setImageFile: (file: File | undefined) => void;
   setStep: (step: number) => void;
 };
@@ -34,6 +36,8 @@ const steps: { [key: number]: React.FC<ERC1155Props> } = {
 
 export const ERC1155 = () => {
   const [tokenName, setTokenName] = useState<string>("");
+  const [collectionDescription, setCollectionDescription] =
+    useState<string>("");
   const [tokenMetadata, setTokenMetadata] = useState<
     ERC1155Metadata | undefined
   >();
@@ -45,10 +49,12 @@ export const ERC1155 = () => {
     tokenName,
     tokenMetadata,
     imageFile,
+    collectionDescription,
     setTokenName,
     setImageFile,
     setTokenMetadata,
     setStep,
+    setCollectionDescription,
   };
 
   const Component = useMemo(() => {
