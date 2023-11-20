@@ -16,18 +16,9 @@ import { PiDiamondsFourFill } from "react-icons/pi";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { AiOutlinePicture } from "react-icons/ai";
-import { FaAudioDescription } from "react-icons/fa";
 
 export const Step1: React.FC<ERC1155Props> = (props) => {
-  const {
-    tokenName,
-    imageFile,
-    collectionDescription,
-    setCollectionDescription,
-    setStep,
-    setTokenName,
-    setImageFile,
-  } = props;
+  const { tokenName, imageFile, setStep, setTokenName, setImageFile } = props;
   const { t } = useTranslation();
 
   const onDrop = useCallback(
@@ -75,14 +66,6 @@ export const Step1: React.FC<ERC1155Props> = (props) => {
             value={tokenName}
             placeholder={t("pages.erc1155.step1.tokenName")}
             onChange={(e) => setTokenName(e)}
-          />
-        </Step1InputWrapper>
-        <Step1InputWrapper>
-          <Input
-            icon={<FaAudioDescription />}
-            value={collectionDescription}
-            placeholder={t("pages.erc1155.step1.collectionDescription")}
-            onChange={(e) => setCollectionDescription(e)}
           />
         </Step1InputWrapper>
       </Step1InputsWrapper>

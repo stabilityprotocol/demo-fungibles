@@ -30,14 +30,8 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
   const publicClient = usePublicClient();
   const [loading, setLoading] = useState(false);
   const { uploadNftData } = useNftStorage();
-  const {
-    tokenName,
-    imageFile,
-    collectionDescription,
-    setStep,
-    setTokenName,
-    setTokenMetadata,
-  } = props;
+  const { tokenName, imageFile, setStep, setTokenName, setTokenMetadata } =
+    props;
   const isValid = useMemo(() => {
     const tokenNameValid = tokenNameSchema.safeParse(tokenName);
     return tokenNameValid.success && imageFile !== undefined && !isWrongNetwork;
@@ -45,8 +39,8 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
 
   const uploadMetadata = useCallback(async () => {
     if (!tokenName || !imageFile) return undefined;
-    return uploadNftData(tokenName, collectionDescription, imageFile);
-  }, [collectionDescription, imageFile, tokenName, uploadNftData]);
+    return uploadNftData(tokenName, imageFile);
+  }, [imageFile, tokenName, uploadNftData]);
 
   useEffectOnce(() => {
     uploadMetadata();

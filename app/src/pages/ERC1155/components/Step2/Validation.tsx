@@ -1,13 +1,12 @@
 import { ERC1155Props } from "../..";
 import { useMemo } from "react";
-import { collectionDescriptionSchema, tokenNameSchema } from "./Schemas";
+import { tokenNameSchema } from "./Schemas";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { useWallet } from "../../../../common/hooks/useWallet";
 
 export const Validation: React.FC<ERC1155Props> = ({
   tokenName,
-  collectionDescription,
   imageFile,
 }) => {
   const { t } = useTranslation();
@@ -15,28 +14,16 @@ export const Validation: React.FC<ERC1155Props> = ({
 
   const validation = useMemo(() => {
     const tokenNameValid = tokenNameSchema.safeParse(tokenName);
-    const collectionDescriptionValid = collectionDescriptionSchema.safeParse(
-      collectionDescription
-    );
     return {
       tokenName: tokenNameValid,
-      collectionDescription: collectionDescriptionValid,
     };
-  }, [collectionDescription, tokenName]);
+  }, [tokenName]);
 
   const isValid = useMemo(() => {
     return (
-      validation.tokenName.success &&
-      validation.collectionDescription.success &&
-      imageFile !== undefined &&
-      !isWrongNetwork
+      validation.tokenName.success && imageFile !== undefined && !isWrongNetwork
     );
-  }, [
-    validation.tokenName.success,
-    validation.collectionDescription.success,
-    imageFile,
-    isWrongNetwork,
-  ]);
+  }, [validation.tokenName.success, imageFile, isWrongNetwork]);
 
   return isValid ? null : (
     <ValidationWrapper>

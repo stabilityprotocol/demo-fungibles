@@ -39,7 +39,6 @@
             "step1": {
                 "title": "LET'S MAKE AN NFT",
                 "tokenName": "Collection Name",
-                "collectionDescription": "Collection Description",
                 "dropzoneDescription": "Drop your image here or click to select"
             },
             "step2": {

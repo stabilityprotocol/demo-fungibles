@@ -12,11 +12,7 @@ export const useNftStorage = () => {
   const [nftData, setNftData] = useRecoilState(NftState);
 
   const uploadNftData = useCallback(
-    async (
-      collectionName: string,
-      collectionDescription: string,
-      file: File
-    ) => {
+    async (collectionName: string, file: File) => {
       const normalizeName = file.name.replace(
         /(.+?)(\.[^.]*$|$)/,
         (_match, _fileName, ext) => "nft" + ext
@@ -30,7 +26,7 @@ export const useNftStorage = () => {
       const metadataPromise = client
         .store({
           name: collectionName,
-          description: collectionDescription,
+          description: "Just try to funge it. You can't do it.",
           image: imageFile,
         })
         .then((metadata) => {
