@@ -26,7 +26,7 @@ export const useNftStorage = () => {
       const metadataPromise = client
         .store({
           name: collectionName,
-          description: "Just try to funge it. You can't do it.",
+          description: "Stability Mintify Collection",
           image: imageFile,
         })
         .then((metadata) => {
