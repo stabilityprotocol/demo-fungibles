@@ -12,7 +12,7 @@
             "step2": {
                 "title": "CONFIRM YOUR TOKEN",
                 "back": "Back",
-                "confirm": "Deploy",
+                "confirm": "Confirm",
                 "loading": "Check your Wallet",
                 "error": "Error deploying your token, review your information and try again.",
                 "validation": {
