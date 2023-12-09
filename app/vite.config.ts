@@ -4,10 +4,5 @@ import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    ViteImageOptimizer({
-      exclude: ["src/assets/hero.png"],
-    }),
-  ],
+  plugins: [react(), ViteImageOptimizer()],
 });
