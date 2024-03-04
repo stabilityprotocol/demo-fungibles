@@ -21,11 +21,13 @@ import {
 } from "./Schemas";
 import { usePublicClient } from "wagmi";
 import { erc20Contract } from "./Contract";
-import { testnetFactories } from "../../../../common/Blockchain";
+import { tokenFactories } from "../../../../common/Blockchain";
 import { LoadingIcon } from "../../../../components/LoadingIcon";
 import { useWallet } from "../../../../common/hooks/useWallet";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
+import { SelectedChainState } from "../../../../common/State/SelectedChain";
+import { useRecoilValue } from "recoil";
 
 export const Step2: React.FC<ERC20Props> = (props) => {
   const { t } = useTranslation();
@@ -42,6 +44,7 @@ export const Step2: React.FC<ERC20Props> = (props) => {
     setMintAmount,
     setTokenMetadata,
   } = props;
+  const selectedChain = useRecoilValue(SelectedChainState);
 
   const isValid = useMemo(() => {
     const tokenNameValid = tokenNameSchema.safeParse(tokenName);
@@ -63,7 +66,7 @@ export const Step2: React.FC<ERC20Props> = (props) => {
         const normalizedSymbol = tokenSymbol.toUpperCase();
         const signer = await ethersSigner;
         const contract = new ethers.Contract(
-          testnetFactories.erc20Factory,
+          tokenFactories[selectedChain].erc20Factory,
           erc20Contract.abi,
           signer
         );
