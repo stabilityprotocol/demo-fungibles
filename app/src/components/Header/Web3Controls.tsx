@@ -11,6 +11,8 @@ import { AiOutlineCopy, AiOutlineZoomIn } from "react-icons/ai";
 import { useWallet } from "../../common/hooks/useWallet";
 import { PiWarningDiamondDuotone } from "react-icons/pi";
 import styled from "styled-components";
+import { SelectedChainState, CHAINS } from "../../common/State/SelectedChain";
+import { useRecoilState } from "recoil";
 
 const TestnetCube = () => {
   return (
@@ -27,19 +29,19 @@ const TestnetCube = () => {
   );
 };
 
-// const MainnetCube = () => {
-//   return (
-//     <img
-//       src={cube}
-//       alt="cube"
-//       style={{
-//         height: "1.5rem",
-//         marginRight: "0.5rem",
-//         marginLeft: "0",
-//       }}
-//     />
-//   );
-// };
+const MainnetCube = () => {
+  return (
+    <img
+      src={cube}
+      alt="cube"
+      style={{
+        height: "1.5rem",
+        marginRight: "0.5rem",
+        marginLeft: "0",
+      }}
+    />
+  );
+};
 
 export const Web3Controls = () => {
   const { address } = useAccount();
@@ -47,6 +49,30 @@ export const Web3Controls = () => {
   const { disconnect } = useDisconnect();
   const [, copyFn] = useCopyToClipboard();
   const { isWrongNetwork, switchChain } = useWallet();
+  const [selectedChain, setSelectedChain] = useRecoilState(SelectedChainState);
+
+  const chainOptions = useMemo(() => {
+    return [
+      {
+        label: (
+          <NetworkOptionWrapper>
+            <TestnetCube />
+            {t("components.header.networks.testnet")}
+          </NetworkOptionWrapper>
+        ),
+        value: "testnet",
+      },
+      {
+        label: (
+          <NetworkOptionWrapper>
+            <MainnetCube />
+            {t("components.header.networks.GTN")}
+          </NetworkOptionWrapper>
+        ),
+        value: "mainnet",
+      },
+    ];
+  }, [t]);
 
   const Comp = useMemo(
     () => () => {
@@ -54,7 +80,24 @@ export const Web3Controls = () => {
       return (
         <>
           <Selector
-            onSelected={() => {}}
+            onSelected={(option) => {
+              setSelectedChain(
+                option === "testnet" ? CHAINS.TESTNET : CHAINS.GTN
+              );
+            }}
+            selected={
+              isWrongNetwork
+                ? {
+                    label: (
+                      <NetworkOptionWrapper>
+                        <InvalidNetwork />
+                        {t("components.header.networks.invalid")}
+                      </NetworkOptionWrapper>
+                    ),
+                    value: "invalid",
+                  }
+                : chainOptions[selectedChain === CHAINS.TESTNET ? 0 : 1]
+            }
             options={[
               {
                 label: (
@@ -67,37 +110,16 @@ export const Web3Controls = () => {
                 ),
                 value: "testnet",
               },
-              // {
-              //   label: (
-              //     <NetworkOptionWrapper>
-              //       <MainnetCube />
-              //       {t("components.header.networks.mainnet")}
-              //     </NetworkOptionWrapper>
-              //   ),
-              //   value: "mainnet",
-              // },
+              {
+                label: (
+                  <NetworkOptionWrapper>
+                    <MainnetCube />
+                    {t("components.header.networks.GTN")}
+                  </NetworkOptionWrapper>
+                ),
+                value: "mainnet",
+              },
             ]}
-            selected={
-              isWrongNetwork
-                ? {
-                    label: (
-                      <NetworkOptionWrapper>
-                        <InvalidNetwork />
-                        {t("components.header.networks.invalid")}
-                      </NetworkOptionWrapper>
-                    ),
-                    value: "invalid",
-                  }
-                : {
-                    label: (
-                      <NetworkOptionWrapper>
-                        <TestnetCube />
-                        {t("components.header.networks.testnet")}
-                      </NetworkOptionWrapper>
-                    ),
-                    value: "testnet",
-                  }
-            }
           />
           <Selector
             options={[

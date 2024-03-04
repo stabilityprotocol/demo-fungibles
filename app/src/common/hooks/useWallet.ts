@@ -1,9 +1,9 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { WalletClient, useNetwork, useWalletClient } from "wagmi";
-import { stbleTestnet } from "../Blockchain";
 import { BrowserProvider } from "ethers";
-
-const appNetwork = stbleTestnet.id;
+import { useRecoilValue } from "recoil";
+import { SelectedChainState } from "../State/SelectedChain";
+import { chainsConfig } from "../Blockchain";
 
 export function walletClientToSigner(walletClient: WalletClient) {
   const { account, transport } = walletClient;
@@ -15,25 +15,33 @@ export function walletClientToSigner(walletClient: WalletClient) {
 export const useWallet = () => {
   const { data: walletClient } = useWalletClient();
   const { chain } = useNetwork();
+  const selectedChain = useRecoilValue(SelectedChainState);
 
-  const isWrongNetwork = useMemo(() => chain?.id !== appNetwork, [chain?.id]);
+  const isWrongNetwork = useMemo(
+    () => chain?.id !== chainsConfig[selectedChain].id,
+    [chain?.id, selectedChain]
+  );
 
   const switchChain = async () => {
-    walletClient?.switchChain(stbleTestnet).catch(async () => {
+    walletClient?.switchChain(chainsConfig[selectedChain]).catch(async () => {
       await walletClient
-        ?.addChain({ chain: stbleTestnet })
-        .then(() => walletClient?.switchChain(stbleTestnet));
+        ?.addChain({ chain: chainsConfig[selectedChain] })
+        .then(() => walletClient?.switchChain(chainsConfig[selectedChain]));
     });
   };
 
   const addChain = async () => {
-    walletClient?.addChain({ chain: stbleTestnet });
+    walletClient?.addChain({ chain: chainsConfig[selectedChain] });
   };
 
   const ethersSigner = useMemo(
     () => (walletClient ? walletClientToSigner(walletClient) : undefined),
-    [walletClient]
+    [walletClient, selectedChain]
   );
+
+  useEffect(() => {
+    console.log("selectedChain", selectedChain);
+  }, [selectedChain]);
 
   return {
     chain,

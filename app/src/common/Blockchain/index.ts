@@ -1,44 +1,13 @@
 import { DedicatedWalletConnector } from "@magiclabs/wagmi-connector";
 import { configureChains } from "@wagmi/core";
 import { publicProvider } from "@wagmi/core/providers/public";
-import { Chain, createConfig } from "wagmi";
+import { createConfig } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
-
-export const stbleTestnet: Chain = {
-  id: 20180427,
-  name: "Stability Testnet",
-  network: "stability-testnet",
-  nativeCurrency: {
-    decimals: 18,
-    name: "Decentralized Native Token",
-    symbol: "DNT",
-  },
-  testnet: true,
-  blockExplorers: {
-    default: {
-      name: "Stability Testnet",
-      url: "https://stability-testnet.blockscout.com/",
-    },
-  },
-  rpcUrls: {
-    default: {
-      http: ["https://free.testnet.stabilityprotocol.com"],
-    },
-    public: {
-      http: ["https://free.testnet.stabilityprotocol.com"],
-    },
-  },
-  contracts: {
-    multicall3: {
-      // https://raw.githubusercontent.com/mds1/multicall/main/src/Multicall3.sol
-      address: "0x3ed62137c5DB927cb137c26455969116BF0c23Cb",
-      blockCreated: 2318,
-    },
-  },
-};
+import { stabilityTestnet } from "./Chains/StabilityTestnet";
+import { GTN } from "./Chains/GTN";
 
 export const { chains, publicClient } = configureChains(
-  [stbleTestnet],
+  [stabilityTestnet, GTN],
   [publicProvider()]
 );
 
@@ -64,7 +33,18 @@ export const config = createConfig({
   publicClient,
 });
 
-export const testnetFactories = {
-  erc20Factory: "0xc01Ee7f10EA4aF4673cFff62710E1D7792aBa8f3",
-  erc1155Factory: "0x970951a12F975E6762482ACA81E57D5A2A4e73F4",
-} as const;
+export const chainsConfig = {
+  GTN,
+  testnet: stabilityTestnet,
+};
+
+export const tokenFactories = {
+  GTN: {
+    erc20Factory: "0x93637fE2f0bcA78b1c1DC9D73d8A59f66702F2a4",
+    erc1155Factory: "0x29A4b5f6075588E4eF340e9eDC5FF9BDb901469D",
+  },
+  testnet: {
+    erc20Factory: "0xc01Ee7f10EA4aF4673cFff62710E1D7792aBa8f3",
+    erc1155Factory: "0x970951a12F975E6762482ACA81E57D5A2A4e73F4",
+  },
+};

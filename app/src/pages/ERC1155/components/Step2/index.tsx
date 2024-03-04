@@ -15,7 +15,7 @@ import { useCallback, useMemo, useState } from "react";
 import { tokenNameSchema } from "./Schemas";
 import { usePublicClient } from "wagmi";
 import { erc1155Contract } from "./Contract";
-import { testnetFactories } from "../../../../common/Blockchain";
+import { tokenFactories } from "../../../../common/Blockchain";
 import { LoadingIcon } from "../../../../components/LoadingIcon";
 import { useWallet } from "../../../../common/hooks/useWallet";
 import { useNftStorage } from "../../../../common/hooks/useNftStorage";
@@ -23,6 +23,8 @@ import { createIpfsLinkFromCidr } from "../../../../common/API";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
 import { useEffectOnce } from "usehooks-ts";
+import { SelectedChainState } from "../../../../common/State/SelectedChain";
+import { useRecoilValue } from "recoil";
 
 export const Step2: React.FC<ERC1155Props> = (props) => {
   const { t } = useTranslation();
@@ -36,6 +38,7 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
     const tokenNameValid = tokenNameSchema.safeParse(tokenName);
     return tokenNameValid.success && imageFile !== undefined && !isWrongNetwork;
   }, [tokenName, imageFile, isWrongNetwork]);
+  const selectedChain = useRecoilValue(SelectedChainState);
 
   const uploadMetadata = useCallback(async () => {
     if (!tokenName || !imageFile) return undefined;
@@ -53,7 +56,7 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
         const uploadJsonDataPromise = await uploadMetadata();
         const signer = await ethersSigner;
         const contract = new ethers.Contract(
-          testnetFactories.erc1155Factory,
+          tokenFactories[selectedChain].erc1155Factory,
           erc1155Contract.abi,
           signer
         );
@@ -84,6 +87,7 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
     }
   }, [
     walletClient,
+    selectedChain,
     uploadMetadata,
     ethersSigner,
     tokenName,
