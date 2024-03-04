@@ -5,6 +5,7 @@
     "hardhat": "^2.18.3"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.9.0"
+    "@openzeppelin/contracts": "^4.9.0",
+    "@remix-project/remixd": "^0.6.27"
   }
 }
