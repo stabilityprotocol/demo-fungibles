@@ -13,7 +13,7 @@ export const { chains, publicClient } = configureChains(
 
 export const mlWalletApiKey = window.location.search.includes("?mlModals")
   ? "pk_live_ACB8ED7FCDEFDC21"
-  : "pk_live_E3FEA2649D5D92A1";
+  : "pk_live_35C72FCE8CC29C4C";
 
 export const dedicatedWallet = new DedicatedWalletConnector({
   options: {
