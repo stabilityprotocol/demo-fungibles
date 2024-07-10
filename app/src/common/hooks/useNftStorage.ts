@@ -36,7 +36,7 @@ export const useNftStorage = () => {
               timerEnd - timerInit
             }ms`
           );
-          return metadata;
+          return { cid: metadata.ipnft };
         });
 
       setNftData((prev) => ({ ...prev, [imageFileText]: metadataPromise }));

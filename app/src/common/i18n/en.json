@@ -56,7 +56,7 @@
                     "title": "Congratulations! This is your new NFT:",
                     "name": "Token Name",
                     "address": "Token Address",
-                    "metadata": "Metadata URL",
+                    "metadata": "Image URL",
                     "transactionHash": "Transaction Hash",
                     "blockNumber": "Block Number"
                 }

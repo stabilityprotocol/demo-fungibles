@@ -48,7 +48,7 @@ export const Step3: React.FC<ERC1155Props> = ({
       {imgObject && (
         <Step3NftPreview>
           <a
-            href={createIpfsImgLink(tokenMetadata.ipfsData.data.image.href)}
+            href={createIpfsImgLink(tokenMetadata.ipfsData.cid)}
             target="_blank"
             rel="noreferrer"
           >
@@ -77,13 +77,11 @@ export const Step3: React.FC<ERC1155Props> = ({
           <li>
             {t("pages.erc1155.step3.tokenDetail.metadata")}:{" "}
             <a
-              href={createIpfsLinkFromCidr(tokenMetadata.ipfsData.ipnft)}
+              href={createIpfsLinkFromCidr(tokenMetadata.ipfsData.cid)}
               target="_blank"
               rel="noreferrer"
             >
-              {shortAddress(
-                createIpfsLinkFromCidr(tokenMetadata.ipfsData.ipnft)
-              )}
+              {shortAddress(createIpfsLinkFromCidr(tokenMetadata.ipfsData.cid))}
             </a>
           </li>
         </ul>

@@ -18,7 +18,7 @@ import { erc1155Contract } from "./Contract";
 import { tokenFactories } from "../../../../common/Blockchain";
 import { LoadingIcon } from "../../../../components/LoadingIcon";
 import { useWallet } from "../../../../common/hooks/useWallet";
-import { useNftStorage } from "../../../../common/hooks/useNftStorage";
+import { useNftStorage } from "../../../../common/hooks/usePinata";
 import { createIpfsLinkFromCidr } from "../../../../common/API";
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
@@ -62,7 +62,7 @@ export const Step2: React.FC<ERC1155Props> = (props) => {
         );
         const deploymentInfo = await contract.deployAndMintERC1155(
           tokenName,
-          createIpfsLinkFromCidr(uploadJsonDataPromise!.ipnft)
+          createIpfsLinkFromCidr(uploadJsonDataPromise!.cid)
         );
         console.log("ERC1155 Deployment Info");
         console.table(deploymentInfo);

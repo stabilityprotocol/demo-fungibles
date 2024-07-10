@@ -1,8 +1,7 @@
-import { NFTStorage } from "nft.storage";
 import { atom } from "recoil";
 
 export type TNftState = {
-  [blob: string]: ReturnType<typeof NFTStorage.store>;
+  [blob: string]: Promise<{ cid: string }>;
 };
 
 export const NftState = atom<TNftState>({
