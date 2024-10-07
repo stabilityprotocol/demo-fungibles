@@ -80,10 +80,8 @@ export const Web3Controls = () => {
       return (
         <>
           <Selector
-            onSelected={(option) => {
-              setSelectedChain(
-                option === "testnet" ? CHAINS.TESTNET : CHAINS.GTN
-              );
+            onSelected={() => {
+              setSelectedChain(CHAINS.TESTNET);
             }}
             selected={
               isWrongNetwork
@@ -110,15 +108,15 @@ export const Web3Controls = () => {
                 ),
                 value: "testnet",
               },
-              {
-                label: (
-                  <NetworkOptionWrapper>
-                    <MainnetCube />
-                    {t("components.header.networks.GTN")}
-                  </NetworkOptionWrapper>
-                ),
-                value: "mainnet",
-              },
+              // {
+              //   label: (
+              //     <NetworkOptionWrapper>
+              //       <MainnetCube />
+              //       {t("components.header.networks.GTN")}
+              //     </NetworkOptionWrapper>
+              //   ),
+              //   value: "mainnet",
+              // },
             ]}
           />
           <Selector
@@ -167,7 +165,17 @@ export const Web3Controls = () => {
         </>
       );
     },
-    [address, copyFn, disconnect, isWrongNetwork, switchChain, t]
+    [
+      address,
+      chainOptions,
+      copyFn,
+      disconnect,
+      isWrongNetwork,
+      selectedChain,
+      setSelectedChain,
+      switchChain,
+      t,
+    ]
   );
 
   return <Comp />;

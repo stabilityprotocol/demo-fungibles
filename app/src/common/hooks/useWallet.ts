@@ -36,7 +36,7 @@ export const useWallet = () => {
 
   const ethersSigner = useMemo(
     () => (walletClient ? walletClientToSigner(walletClient) : undefined),
-    [walletClient, selectedChain]
+    [walletClient]
   );
 
   useEffect(() => {
