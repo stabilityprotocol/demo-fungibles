@@ -16,5 +16,5 @@ export const ChainConfig = {
 export const SelectedChainState = atom<CHAINS>({
   key: "SelectedChainState_v2",
   default: CHAINS.TESTNET,
-  effects: [localStorageEffect<CHAINS>("SelectedChainState")],
+  effects: [localStorageEffect<CHAINS>("SelectedChainState_v2")],
 });
